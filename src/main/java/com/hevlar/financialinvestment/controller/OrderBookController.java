@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/orderBooks/")
+@RequestMapping("/api/v1/orderBooks")
 public class OrderBookController {
 
     private final OrderBookService service;
