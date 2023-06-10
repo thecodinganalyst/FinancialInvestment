@@ -3,6 +3,7 @@ package com.hevlar.financialinvestment.service;
 import com.hevlar.financialinvestment.model.Order;
 import com.hevlar.financialinvestment.model.OrderBook;
 import com.hevlar.financialinvestment.model.OrderBookStatus;
+import com.hevlar.financialinvestment.model.OrderExecution;
 import com.hevlar.financialinvestment.repository.OrderBookRepository;
 import com.hevlar.financialinvestment.repository.OrderRepository;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,6 @@ public class OrderBookServiceUnitTest {
     @Test
     void givenOrderBookIsClosed_whenAddOrder_thenThrow(){
         OrderBook orderBook = new OrderBook(1L, OrderBookStatus.Closed, List.of(), List.of());
-        Order order = new Order();
         Mockito.when(orderBookRepository.findById(1L)).thenReturn(Optional.of(orderBook));
         assertThrows(IllegalStateException.class, () -> orderBookService.addOrder(1L, new Order()));
     }
@@ -59,5 +59,19 @@ public class OrderBookServiceUnitTest {
     void givenOrderBookDoesntExist_whenCloseOrderBook_thenThrow(){
         Mockito.when(orderBookRepository.findById(1L)).thenReturn(Optional.empty());
         assertThrows(IllegalArgumentException.class, () -> orderBookService.closeOrderBook(1L));
+    }
+
+    @Test
+    void givenOrderBookDoesntExist_whenAddExecution_thenThrow(){
+        Mockito.when(orderBookRepository.findById(1L)).thenReturn(Optional.empty());
+        assertThrows(IllegalArgumentException.class, () -> orderBookService.addExecution(1L, new OrderExecution()));
+    }
+
+    @Test
+    void givenOrderBookIsOpen_whenAddExecution_thenThrow(){
+        OrderBook orderBook = new OrderBook(1L, OrderBookStatus.Open, List.of(), List.of());
+        OrderExecution execution = new OrderExecution();
+        Mockito.when(orderBookRepository.findById(1L)).thenReturn(Optional.of(orderBook));
+        assertThrows(IllegalStateException.class, () -> orderBookService.addExecution(1L, execution));
     }
 }

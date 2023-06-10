@@ -2,7 +2,6 @@ package com.hevlar.financialinvestment.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,4 +23,10 @@ public class OrderExecution{
     @ManyToOne
     @JoinColumn
     OrderBook orderBook;
+
+    public OrderExecution(Integer quantity, BigDecimal price, OrderBook orderBook){
+        this.quantity = quantity;
+        this.price = price;
+        this.orderBook = orderBook;
+    }
 }

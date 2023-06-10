@@ -1,10 +1,6 @@
 package com.hevlar.financialinvestment.service;
 
-import com.hevlar.financialinvestment.model.Order;
-import com.hevlar.financialinvestment.model.OrderBook;
-import com.hevlar.financialinvestment.model.OrderBookStatus;
-import com.hevlar.financialinvestment.model.OrderType;
-import org.hibernate.internal.util.ZonedDateTimeComparator;
+import com.hevlar.financialinvestment.model.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -51,6 +46,19 @@ class OrderBookServiceIntegrationTest {
         OrderBook result = service.closeOrderBook(orderBook.getOrderBookId());
         assertThat(result.getOrderBookId(), is(orderBook.getOrderBookId()));
         assertThat(result.getStatus(), is(OrderBookStatus.Closed));
+    }
+
+    @Test
+    void whenAddExecution_thenReturnExecution(){
+        OrderBook orderBook = service.openOrderBook();
+        Order order = new Order(ZonedDateTime.now(), "Isin1", 10, OrderType.LimitOrder, new BigDecimal("100.00"), orderBook);
+        service.addOrder(orderBook.getOrderBookId(), order);
+        service.closeOrderBook(orderBook.getOrderBookId());
+        OrderExecution execution = new OrderExecution(5, new BigDecimal("100.00"), orderBook);
+        OrderExecution result = service.addExecution(orderBook.getOrderBookId(), execution);
+        assertThat(result.getOrderBook().getOrderBookId(), is(orderBook.getOrderBookId()));
+        assertThat(result.getQuantity(), is(5));
+        assertThat(result.getPrice(), is(new BigDecimal("100.00")));
     }
 
 }
