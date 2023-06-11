@@ -43,7 +43,7 @@ class OrderBookControllerIntegrationTest {
     @Test
     @Order(2)
     void closeOrderBook() throws Exception {
-        mvc.perform(patch("/api/v1/orderBooks/1"))
+        mvc.perform(patch("/api/v1/orderBooks/1/close"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.orderBookId").value(1))
