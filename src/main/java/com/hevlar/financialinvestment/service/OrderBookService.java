@@ -33,7 +33,8 @@ public class OrderBookService {
         if(orderBookExist.isEmpty()) throw new IllegalArgumentException("Order book id " + orderBookId + " does not exist");
         OrderBook orderBook = orderBookExist.get();
         if(orderBook.getStatus().equals(OrderBookStatus.Closed)) throw new IllegalStateException("Orders cannot be added because order book is closed");
-        return orderRepository.save(order);
+        Order result = orderRepository.save(order);
+        return result;
     }
 
     public OrderBook closeOrderBook(Long orderBookId){
