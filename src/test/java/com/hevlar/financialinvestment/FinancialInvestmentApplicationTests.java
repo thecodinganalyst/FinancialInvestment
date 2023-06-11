@@ -8,6 +8,7 @@ class FinancialInvestmentApplicationTests {
 
     @Test
     void contextLoads() {
+        FinancialInvestmentApplication.main(new String[]{});
     }
 
 }

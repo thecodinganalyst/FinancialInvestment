@@ -52,7 +52,7 @@ public class OrderControllerIntegrationTest {
     }
 
     @Test
-    void whenAddOrder_thenReturnOrder() throws Exception {
+    void whenAddLimitOrder_thenReturnOrder() throws Exception {
         //Given
         ZonedDateTime nowTime = ZonedDateTime.now();
         Order order = new Order(
@@ -73,6 +73,28 @@ public class OrderControllerIntegrationTest {
                 .andExpect(jsonPath("$.quantity").value(20))
                 .andExpect(jsonPath("$.orderType").value(OrderType.LimitOrder.name()))
                 .andExpect(jsonPath("$.price").value(100.0));
+    }
+
+    @Test
+    void whenAddMarketOrder_thenReturnOrder() throws Exception {
+        //Given
+        ZonedDateTime nowTime = ZonedDateTime.now();
+        Order order = new Order(
+                nowTime,
+                "Isin1",
+                20,
+                OrderType.MarketOrder,
+                orderBook);
+        String orderJson = objectMapper.writeValueAsString(order);
+
+        String url = "/api/v1/orderBooks/" + orderBook.getOrderBookId().toString() + "/orders";
+        mvc.perform(post(url).contentType(MediaType.APPLICATION_JSON).content(orderJson))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.orderId").isNotEmpty())
+                .andExpect(jsonPath("$.instrumentId").value("Isin1"))
+                .andExpect(jsonPath("$.quantity").value(20))
+                .andExpect(jsonPath("$.orderType").value(OrderType.MarketOrder.name()));
     }
 
     @Test
