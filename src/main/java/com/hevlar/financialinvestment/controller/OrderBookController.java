@@ -21,7 +21,7 @@ public class OrderBookController {
         return service.openOrderBook();
     }
 
-    @PatchMapping("/{orderBookId}")
+    @PatchMapping("/{orderBookId}/close")
     public OrderBook closeOrderBook(@PathVariable("orderBookId") Long orderBookId){
         return service.closeOrderBook(orderBookId);
     }
