@@ -1,5 +1,7 @@
 package com.hevlar.financialinvestment.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.hevlar.financialinvestment.validation.ValidOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +34,7 @@ public class Order {
     @ManyToOne
     @JoinColumn
     @NotNull(message = "order book cannot be null")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "orderBookId", scope = OrderBook.class)
     OrderBook orderBook;
 
     public Order(ZonedDateTime entryDate, String instrumentId, Integer quantity, OrderType orderType, BigDecimal price, OrderBook orderBook){
