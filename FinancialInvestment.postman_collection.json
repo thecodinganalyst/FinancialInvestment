@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "9d7cc144-d57c-4d7f-aebf-f5dcfee430fe",
+		"name": "FinancialInvestment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12708565"
+	},
+	"item": [
+		{
+			"name": "Open Order Book",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/orderBooks",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"orderBooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Market Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"instrumentId\": \"Isin1\",\n    \"entryDate\": \"2023-06-12T15:30:00+08:00\",\n    \"quantity\": 10,\n    \"orderType\": \"MarketOrder\",\n    \"orderBook\": {\n        \"orderBookId\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/orderBooks/1/orders",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"orderBooks",
+						"1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Limit Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"instrumentId\": \"Isin1\",\n    \"entryDate\": \"2023-06-12T15:30:00+08:00\",\n    \"quantity\": 10,\n    \"orderType\": \"LimitOrder\",\n    \"price\": \"100.00\",\n    \"orderBook\": {\n        \"orderBookId\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/orderBooks/1/orders",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"orderBooks",
+						"1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Close Order Book",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Add Execution",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"quantity\": 1,\n    \"price\": \"100.00\",\n    \"orderBook\": {\n        \"orderBookId\": 1\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/orderBooks/1/executions",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"orderBooks",
+						"1",
+						"executions"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
