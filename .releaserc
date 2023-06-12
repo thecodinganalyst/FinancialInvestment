@@ -1,6 +1,5 @@
 {
   "branches": "main",
-  "repositoryUrl": "https://github.com/thecodinganalyst/FinancialInvestment",
   "debug": "false",
   "plugins": [
     "@semantic-release/commit-analyzer",
